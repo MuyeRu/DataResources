@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BatchRunner xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="batch_runner.xsd">
+	<ComponentSet name="technology_cost">
+		<FileSet name="base_RE"> 
+		</FileSet>
+		<FileSet name="low_RE">
+			<Value name="solar_low">../input/gcamdata/xml/solar_low.xml</Value>
+			<Value name="wind_low">../input/gcamdata/xml/wind_low.xml</Value>
+		</FileSet>
+		<FileSet name="adv_RE">
+			<Value name="solar_adv">../input/gcamdata/xml/solar_adv.xml</Value>
+			<Value name="wind_adv">../input/gcamdata/xml/wind_adv.xml</Value>
+		</FileSet>
+	</ComponentSet>
+	<ComponentSet name="carbon_cap">
+		<FileSet name="_no_cap"> 
+		</FileSet>
+		<FileSet name="_cap_ffi">
+			<Value name="cap">../input/policy/carbon_cap.xml</Value>
+		</FileSet>
+		<FileSet name="_cap_luc">
+			<Value name="cap">../input/policy/carbon_cap.xml</Value>
+			<Value name="link">../input/policy/global_uct_in_constraint_GlobalMarket.xml</Value>
+		</FileSet>
+	</ComponentSet>
+</BatchRunner>
