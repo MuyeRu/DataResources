@@ -1,0 +1,34 @@
+;-- copy shapefile_utils.ncl from 
+;-- https://www.ncl.ucar.edu/Applications/Scripts/shapefile_utils.ncl
+load "$HOME/NCL/shapefiles/shapefile_utils.ncl" 
+
+shpname  = "./India/india.shp" 
+maskname = "./India/india_mask.nc" 
+
+print_shapefile_info(shpname)
+
+;-- open data file to get the grid to be used
+f = addfile("monmean2007_celcius.nc","r")
+
+;-- read variable
+var                    =  f->T2(0,:,:)
+var@lat2d              =  f->XLAT
+var@lon2d              =  f->XLONG
+
+;-- shapefile mask resources
+opt             =  True
+opt@return_mask =  True    ;-- this forces the return of a 0s and 1s mask array
+
+;-- create the mask based on the given shapefile
+mask_array             =  shapefile_mask_data(var, shpname, opt)
+mask_array!0           = "y" 
+mask_array!1           = "x" 
+mask_array@coordinates = "XLAT XLONG" 
+
+;-- create new netCDF file and write mask array
+system("rm -f " + maskname)
+fout = addfile(maskname,"c")
+
+fout->mask_array =  mask_array
+fout->XLAT       =  f->XLAT
+fout->XLONG      =  f->XLONG
